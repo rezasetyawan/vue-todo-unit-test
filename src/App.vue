@@ -60,6 +60,8 @@ const todoItem = (name: string) => {
     name
   })
 }
+
+defineExpose({ totalTodoList, todosCompleted, deleteTodo, updateTodo, todoItem })
 </script>
 
 <template>
@@ -69,7 +71,7 @@ const todoItem = (name: string) => {
     <TodoItem @create-todo="todoItem"></TodoItem>
 
     <!--  list todo item-->
-    <h2>{{ todosCompleted }} out of {{ totalTodoList }} items completed</h2>
+    <h2 data-test="todo-info">{{ todosCompleted }} out of {{ totalTodoList }} items completed</h2>
     <template v-for="item in todoItems" :key="item">
       <TodoListItem
           :item="item"

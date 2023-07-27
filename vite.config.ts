@@ -13,5 +13,13 @@ export default defineConfig({
         autoprefixer,
       ]
     }
+  },
+  test: {
+    include: ['src/tests/*'],
+    globals: true, // allow the Vitest APIs to be accessible within the test files without importing them.
+		environment: 'happy-dom', // jsdom
+    coverage: {
+      enable: true
+    }
   }
 })

@@ -3,6 +3,12 @@
 <img src="./public/Screenshot from 2023-07-19 20-15-44.png">
 <img src="./public/Screenshot from 2023-07-19 20-15-59.png">
 
+
+### cover with unit test comp and check coverage
+
+<img src="./public/Screenshot from 2023-07-27 12-14-54.png">
+<img src="./public/Screenshot from 2023-07-27 12-15-16.png">
+
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
 ## Recommended IDE Setup

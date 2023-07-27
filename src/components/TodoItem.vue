@@ -11,14 +11,16 @@ function submit() {
   todo.value = ''
 }
 
+// defineExpose({ emit })
+
 </script>
 
 <template>
   <div>
-    <h3>what needs to be done?</h3>
+    <h3 data-test="title">what needs to be done?</h3>
     <form @submit.prevent="submit">
-      <input type="text" v-model.trim="todo" />
-      <button type="submit">Add</button>
+      <input type="text" data-test="todo-input" v-model.trim="todo" />
+      <button data-test="submit-button" type="submit">Add</button>
     </form>
   </div>
 </template>

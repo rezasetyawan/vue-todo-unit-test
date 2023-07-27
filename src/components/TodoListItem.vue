@@ -43,10 +43,10 @@ function saveTodo() {
             :value="props.item?.name"
             :checked="props.item?.isCompleted"
             @input="handleUpdateCompleted"
-            name="todo-name"
+            name="todo-name-checkbox"
 
         />
-        <label for="todo">{{ props.item?.name }}</label>
+        <label for="todo" data-test="todo-name-label">{{ props.item?.name }}</label>
       </div>
       <div class="todo-list_items--buttons">
         <button type="button" name="edit" @click="isEdit = !isEdit">Edit</button>
