@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import TodoEditItem from '../components/TodoEditItem.vue'
 
+
 describe("Todo edit item comp", () => {
     let wrapper
 
@@ -32,5 +33,5 @@ describe("Todo edit item comp", () => {
 
         expect(editInput.element.value).toBe('edit todo name')
         expect(wrapper.emitted()).toHaveProperty('update:modelValue')
-    })
+    }) 
 })

@@ -9,7 +9,6 @@ describe("Todo list item comp", () => {
     })
 
     it("emit delete todo", async () => {
-        // const emitted = wrapper.emitted('delete')
         const deleteBtn = wrapper.find('button[name="delete"]')
         await deleteBtn.trigger('click')
 

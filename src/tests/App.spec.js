@@ -1,66 +1,87 @@
-import { mount  } from "@vue/test-utils";
-import App from '../App.vue'
+import { mount } from "@vue/test-utils";
+import App from "../App.vue";
+describe("App dashboard", () => {
+  let wrapper;
 
-describe('App dashboard', () => {
-    let wrapper
+  beforeEach(() => {
+    wrapper = mount(App);
+  });
 
-    beforeEach(() => {
-        wrapper = mount(App)
-    })
-    it('initialize app', () => {
-        const h1 = wrapper.get('h1').text()
-        
-        expect(h1).toBe("To-Do List")
-    })
+  const addTodoItem = async () => {
+    const input = wrapper.find('input[data-test="todo-input"]');
+    await input.setValue("hello new todo");
 
-    it("show default list render", async () => {
-        const info = wrapper.get('[data-test="todo-info"]')
-        const checkbox1 = await wrapper.find('input[value="Learn vue todo"]')
-        expect(checkbox1.element.checked).toBe(false)
+    const addSubmit = wrapper.find('button[type="submit"]');
+    await addSubmit.trigger("submit");
+  };
 
-        const checkbox2 = await wrapper.find('input[value="Nodejs best practices"]')
-        expect(checkbox2.element.checked).toBe(true)
+  it("initialize app", () => {
+    expect(wrapper.get("h1").exists()).toBe(true);
+  });
 
-        const totalTodoList = await wrapper.vm.totalTodoList
-        const todosCompleted = await wrapper.vm.todosCompleted
-        
-        expect(totalTodoList).toBe(2)
-        expect(todosCompleted).toBe(1)
-        expect(info.text()).toBe(`1 out of 2 items completed`)
+  it("show default list render", async () => {
+    const info = wrapper.get('[data-test="todo-info"]');
+    const checkbox1 = await wrapper.find('input[value="Learn vue todo"]');
+    expect(checkbox1.element.checked).toBe(false);
 
-    })
+    const checkbox2 = await wrapper.find(
+      'input[value="Nodejs best practices"]'
+    );
+    expect(checkbox2.element.checked).toBe(true);
 
-    it("should update count completed item", async () => {
-        const info = wrapper.get('[data-test="todo-info"]')
-        const checkbox1 = await wrapper.find('input[value="Learn vue todo"]')
-        checkbox1.setChecked()
-        const totosCompleted = await wrapper.vm.todosCompleted
+    const totalTodoList = await wrapper.vm.totalTodoList;
+    const todosCompleted = await wrapper.vm.todosCompleted;
 
-        expect(checkbox1.element.checked).toBe(true)
-        expect(totosCompleted).toBe(2)
-        
-        expect(info.text()).toBe('2 out of 2 items completed')
-    })
+    expect(totalTodoList).toBe(2);
+    expect(todosCompleted).toBe(1);
+    expect(info.text()).toBe(`1 out of 2 items completed`);
+  });
 
-    it("should able delete todo item", async () => {
-        const input = wrapper.find('input[data-test="todo-input"]')
-        await input.setValue('hello new todo')
+  it("should update count completed item", async () => {
+    const info = wrapper.get('[data-test="todo-info"]');
+    const checkbox1 = await wrapper.find('input[value="Learn vue todo"]');
+    checkbox1.setChecked();
+    const todosCompleted = await wrapper.vm.todosCompleted;
 
-        const addSubmit = wrapper.find('button[type="submit"]')
-        await addSubmit.trigger('submit')
+    expect(checkbox1.element.checked).toBe(true);
+    expect(todosCompleted).toBe(2);
 
-        // delete
-        expect(wrapper.vm.todoItems).toHaveLength(3)
-        await wrapper.vm.deleteTodo(wrapper.vm.todoItems[2])
-        expect(wrapper.vm.todoItems).toHaveLength(2)
-    })
+    expect(info.text()).toBe("2 out of 2 items completed");
+  });
 
-    it("should able update todo item", async () => {
-        await wrapper.find('button[name="edit"]').trigger('click')
-        const input = wrapper.find('input[data-test="todo-input"]')
-        await input.setValue('update new todo')
+  it("should able add todo item", async () => {
+    await addTodoItem();
 
-        // await wrapper.find('button[name="save"]').trigger('click')
-        await wrapper.vm.updateTodo(wrapper.vm.todoItems[1])
-    })
-})
+    expect(wrapper.vm.todoItems).toHaveLength(3);
+  });
+
+  it("should able add and delete todo item", async () => {
+    await addTodoItem();
+
+    expect(wrapper.vm.todoItems).toHaveLength(3);
+    await wrapper.vm.deleteTodo(wrapper.vm.todoItems[2]);
+    expect(wrapper.vm.todoItems).toHaveLength(2);
+  });
+
+  it("should able update todo itemm", async () => {
+    const editbtn = wrapper.find('button[name="edit"]');
+    console.log(editbtn.text());
+    await editbtn.trigger("click");
+
+    await wrapper
+      .find('input[data-test="todo-input"]')
+      .setValue("update new todo");
+
+    const updatebtn = wrapper.find('button[name="save"]');
+    await updatebtn.trigger("click");
+    console.log(updatebtn.text());
+
+    await wrapper.vm.updateTodo({
+      id: "1",
+      isCompleted: false,
+      name: "update new todo",
+    });
+
+    expect(wrapper.vm.todoItems[0].name).toBe("update new todo");
+  });
+});

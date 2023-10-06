@@ -12,7 +12,7 @@ const props = defineProps({
 const emit = defineEmits(['completed', 'delete', 'save'])
 
 const isEdit = ref<boolean>(false)
-const editName = ref<string>(props.item?.name)
+const editName = ref<string | undefined>(props.item?.name)
 
 function handleUpdateCompleted() {
   const updateTodo = {
@@ -49,7 +49,7 @@ function saveTodo() {
         <label for="todo" data-test="todo-name-label">{{ props.item?.name }}</label>
       </div>
       <div class="todo-list_items--buttons">
-        <button type="button" name="edit" @click="isEdit = !isEdit">Edit</button>
+        <button type="button" name="edit" @click="isEdit = !isEdit">Edit {{ props.item?.id }}</button>
         <button type="button" name="delete" @click="handleDeleteTodo">
           Delete
         </button>
@@ -68,7 +68,7 @@ function saveTodo() {
             Cancel
           </button>
           <button type="button" name="save" @click="saveTodo">
-            Save
+            Save {{ props.item?.id }}
           </button>
         </div>
       </div>
